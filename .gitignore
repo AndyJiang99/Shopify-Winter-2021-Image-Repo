@@ -1,0 +1,4 @@
+/static/uploads
+.DS_Store
+.vscode/
+auth.json

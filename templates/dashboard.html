@@ -1,0 +1,58 @@
+{% extends "layout.html" %}
+{% block body %} 
+<div class="container" style="display:block; margin-top:10%">
+    <div class="row h-100" style='text-align: center; display:block;'>
+        <div class="col-sm-6 col-md-offset-6 mx-auto my-auto">
+            <h1> Welcome to your image repository! </h1>
+            <p> You are currently logged in as {{ name }}
+            <form>
+                <button type="input" formmethod="post" formaction="/logout" value="Logout" class="btn btn-outline-primary">Logout</button>
+            </form>
+            </p>
+            <h2>Here are all of your uploaded images!</h2>
+            <form>
+                <ul style="list-style-type:none; display:inline-block; text-align: left;">
+                    {% for row in files %}
+                    <li><input type="checkbox" id={{row}} name= "pictures" value={{row}}>&nbsp;{{row}}</li>
+                    {% endfor %}
+                </ul>
+                <p>
+                    <button type="button" onClick="selectAll()" value="Select All" class="btn btn-outline-primary">Select All</button>
+                    <button type="button" onClick="UnSelectAll()" value="Deselect All" class="btn btn-outline-primary">Unselect All</button>
+                    <button type="input" formmethod="post" formaction="/viewPictures" enctype="multipart/form-data" value="Download" class="btn btn-outline-info">Download</button>
+                </p>
+                <p>
+                    <button type="input" formmethod="post" formaction="/deletePictures" enctype="multipart/form-data" value="Delete" class="btn btn-outline-danger btn-block">Delete</button>
+                </p>
+            </form>
+            <h2>Select multiple images to upload and display</h2>
+            <p>
+                {% with messages = get_flashed_messages() %}
+                {% if messages %}
+            <ul class=flashes>
+                {% for message in messages %}
+                <li>{{ message }}</li>
+                {% endfor %}
+            </ul>
+            {% endif %}
+            {% endwith %}
+            </p>
+            <form method="post" action="/upload" enctype="multipart/form-data">
+                <dl>
+                    <p>
+                        <input type="file" name="files[]" multiple="true" autocomplete="off" required accept=".jpg, .png" >
+                    </p>
+                </dl>
+                <p>
+                    <button type="input" value="Upload" class="btn btn-outline-info btn-block">Upload</button>
+                </p>
+            </form>
+            {% if filenames %}
+            <h2>Just uploaded the following images!</h2>
+            {% endif %}
+		</div>
+	</div>
+	{% block uploadedimages %}{% endblock %}
+</div>
+
+{% endblock %}
