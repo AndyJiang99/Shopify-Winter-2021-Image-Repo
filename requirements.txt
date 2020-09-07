@@ -3,3 +3,4 @@ Flask-PyMongo
 Werkzeug
 pymongo
 cryptography
+gunicorn

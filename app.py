@@ -20,8 +20,8 @@ auth = json.loads(open("auth.json", 'r').read())
 app = Flask(__name__)
 
 # app.config['MONGO_URI'] = MONGO_URI
-MONGO_URI = process.env.MONGO_URI
-app.config['MONGO_URI'] = process.env.MONGO_URI
+MONGO_URI = os.environ.get('MONGO_URI', None)
+app.config['MONGO_URI'] = MONGO_URI
 app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
 
 mongo = PyMongo(app)
@@ -231,5 +231,4 @@ def deletePictures():
 if __name__ == '__main__':
     app.secret_key = 'mysecret'
     write_key()
-    port = int(os.environ.get("PORT", 5000))
-    app.run(host="0.0.0.0", port=port)
+    app.run(threaded=True, port=5000)
