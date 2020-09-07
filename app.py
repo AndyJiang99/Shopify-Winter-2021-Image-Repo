@@ -13,7 +13,7 @@ import json
 ALLOWED_EXTENSIONS = set(['png', 'jpg', 'jpeg', 'gif'])
 UPLOAD_FOLDER = 'static/uploads'
 
-auth = json.loads(open("auth.json", 'r').read())
+# auth = json.loads(open("auth.json", 'r').read())
 
 # MONGO_URI = auth['MONGO_URI']
 
@@ -23,6 +23,7 @@ app = Flask(__name__)
 MONGO_URI = os.environ.get('MONGO_URI', None)
 app.config['MONGO_URI'] = MONGO_URI
 app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
+app.secret_key = 'mysecret'
 
 mongo = PyMongo(app)
 
@@ -229,6 +230,6 @@ def deletePictures():
         return render_template('register.html')
 
 if __name__ == '__main__':
-    app.secret_key = 'mysecret'
+    
     write_key()
     app.run(threaded=True, port=5000)

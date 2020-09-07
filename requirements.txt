@@ -1,6 +1,7 @@
-flask
+Flask==1.1.1
 Flask-PyMongo
 Werkzeug
 pymongo
 cryptography
-gunicorn
+Jinja2==2.10.1
+gunicorn==19.9.0
