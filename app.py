@@ -15,11 +15,13 @@ UPLOAD_FOLDER = 'static/uploads'
 
 auth = json.loads(open("auth.json", 'r').read())
 
-MONGO_URI = auth['MONGO_URI']
+# MONGO_URI = auth['MONGO_URI']
 
 app = Flask(__name__)
 
-app.config['MONGO_URI'] = MONGO_URI
+# app.config['MONGO_URI'] = MONGO_URI
+MONGO_URI = process.env.MONGO_URI
+app.config['MONGO_URI'] = process.env.MONGO_URI
 app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
 
 mongo = PyMongo(app)
