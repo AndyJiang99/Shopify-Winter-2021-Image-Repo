@@ -22,6 +22,9 @@ User can then upload images to the repository and is securely stored in the clou
 User can see the images that they have in the repository. They can select/unselect one/many/all of the images to flag for deletion from the repository or download onto their device.
 User can log out, and upon logging back in, user can still see the images previously stored.
 
+### User Screenshots
+![Dashboard](https://github.com/AndyJiang99/Shopify-Winter-2021-Image-Repo/Images/Dashboard.png)
+
 ### Current Features
 
 Current features/abilities implemented:
