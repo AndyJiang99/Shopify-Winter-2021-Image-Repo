@@ -26,6 +26,7 @@ User can log out, and upon logging back in, user can still see the images previo
 
 Current features/abilities implemented:
  - **Add new users** to the system
+ - Storing user **password in encrypted format** in SHA512 format
  - **Access Control** - Users can only access/view their own images
  - **Access Control** - Users can only delete their own images
  - **Adding one/bulk** image/s to the repository
