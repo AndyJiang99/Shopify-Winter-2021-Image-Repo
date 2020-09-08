@@ -9,9 +9,9 @@ from werkzeug.utils import secure_filename
 from zipfile import ZipFile
 from cryptography.fernet import Fernet
 import json
-from helper import ALLOWED_EXTENSIONS, listAll, listName, allowed_file
 
 UPLOAD_FOLDER = 'static/uploads'
+ALLOWED_EXTENSIONS = set(['png', 'jpg', 'jpeg', 'gif'])
 
 app = Flask(__name__)
 
@@ -56,6 +56,41 @@ def index():
     return render_template('index.html')
 
 
+# User registration method
+# Returns a page
+@app.route('/register', methods=['POST', 'GET'])
+def register():
+
+    # New registration
+    if request.method == 'POST':
+        existing_user = \
+            MongoClient(MONGO_URI).UserLogin.users.find_one({'username': request.form['username'
+                ]})
+
+        # If username doesn't already exist
+        if existing_user is None:
+
+            # Encrypt user password
+            hashpass = generate_password_hash(request.form['pass'],
+                    method='SHA512')
+
+            # Store user information
+            MongoClient(MONGO_URI).UserLogin.users.insert_one({'username': request.form['username'
+                    ], 'password': hashpass, 'name': request.form['name'
+                    ]})
+
+            # Set the current session to the registered user
+            session['username'] = request.form['username']
+            session['name'] = request.form['name']
+            return redirect(url_for('index'))
+
+        return render_template('index.html',
+                               message='That username already exists!')
+
+    # Attemping a GET requests ends up here
+    return render_template('register.html')
+
+
 # Login method
 # Returns a page
 @app.route('/login', methods=['POST', 'GET'])
@@ -95,39 +130,13 @@ def login():
                            )
 
 
-# User registration method
-# Returns a page
-@app.route('/register', methods=['POST', 'GET'])
-def register():
-
-    # New registration
-    if request.method == 'POST':
-        existing_user = \
-            MongoClient(MONGO_URI).UserLogin.users.find_one({'username': request.form['username'
-                ]})
-
-        # If username doesn't already exist
-        if existing_user is None:
-
-            # Encrypt user password
-            hashpass = generate_password_hash(request.form['pass'],
-                    method='SHA512')
-
-            # Store user information
-            MongoClient(MONGO_URI).UserLogin.users.insert_one({'username': request.form['username'
-                    ], 'password': hashpass, 'name': request.form['name'
-                    ]})
-
-            # Set the current session to the registered user
-            session['username'] = request.form['username']
-            session['name'] = request.form['name']
-            return redirect(url_for('index'))
-
-        return render_template('index.html',
-                               message='That username already exists!')
-
-    # Attemping a GET requests ends up here
-    return render_template('register.html')
+# User log out. Clear session username
+# Returns log out confirmation
+@app.route('/logout', methods=['POST'])
+def logout():
+    session.clear()
+    return render_template('index.html',
+                           message='Successfully logged out!')
 
 
 # User uploads images
@@ -187,15 +196,6 @@ def upload():
 def display_image(filename):
     return redirect(url_for('static', filename='uploads/' + filename),
                     code=301)
-
-
-# User log out. Clear session username
-# Returns log out confirmation
-@app.route('/logout', methods=['POST'])
-def logout():
-    session.clear()
-    return render_template('index.html',
-                           message='Successfully logged out!')
 
 
 # Allows the user to be able to download files they have uploaded
@@ -278,6 +278,36 @@ def deletePictures():
 
     # If not authenticated, send back to register page
     return render_template('register.html')
+
+# Function to list all of the files under a specific user in Mongo
+# Returns a list of all files (including image and image name)
+# Used when user attemps to download files
+def listAll():
+    if 'username' in session:
+        client = MongoClient(MONGO_URI)
+        documents = \
+            list(client.ImagesAll.images.find({'username': session['username'
+                 ]}))
+        return documents
+
+
+# Function to list all of the filers under a specific user in Mongo
+# Returns ONLY filenames
+# Used when loading files to dashboard and deleting files
+def listName():
+    if 'username' in session:
+        client = MongoClient(MONGO_URI)
+        documents = \
+            list(client.ImagesAll.images.find({'username': session['username'
+                 ]}, {'filename': 1}))
+        return documents
+
+
+# Allowable file extensions
+def allowed_file(filename):
+    return '.' in filename and filename.rsplit('.', 1)[1].lower() \
+        in ALLOWED_EXTENSIONS
+
 
 if __name__ == '__main__':
     write_key()

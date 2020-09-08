@@ -1,7 +1,7 @@
 # Shopify Image Repository
 
 Shopify Winter 2021 Backend Developer Intern application project
-Made by Andy Jiang, with a lot of ☕️☕️
+Made by Andy Jiang, with a lot of ☕️☕️☕️
 
 This is my project for the Shopify Winter 2021 Backend Developer Internship application!
 This application allows the numerous features for users to use this application as an image repository to persistently store delete their images, allowing for authentication, encrypted uploads, downloads, and deletion.
@@ -11,7 +11,7 @@ This application allows the numerous features for users to use this application 
 The application is deployed at: https://shopify-winter-2021-image-repo.herokuapp.com/
 To run this project locally, follow these steps
 1. `git clone` the project
-2. Open terminal or command line and run `pip install -r requirements.txt`
+2. Open terminal or command line and run `pip3 install -r requirements.txt`
 3. Modify the `MONGO_URI` in `app.py` to your own MongoDB Database
 4. Run `python3 app.py`
 
@@ -42,9 +42,7 @@ Current features/abilities implemented:
 
 ### Flowchart of data flow
 
-```mermaid
-sequenceDiagram
-
+```
 User/Client ->> Flask Server: User registers.
 Flask Server -->> MongoDB: If username doesn't exist, saves registration info
 MongoDB -->> Flask Server: Success
