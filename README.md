@@ -23,7 +23,7 @@ User can see the images that they have in the repository. They can select/unsele
 User can log out, and upon logging back in, user can still see the images previously stored.
 
 ### User Screenshots
-![Dashboard](https://github.com/AndyJiang99/Shopify-Winter-2021-Image-Repo/Images/Dashboard.png)
+![Dashboard](https://github.com/AndyJiang99/Shopify-Winter-2021-Image-Repo/blob/master/Images/Dashboard.png)
 
 ### Current Features
 
