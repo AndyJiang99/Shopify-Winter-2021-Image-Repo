@@ -9,8 +9,8 @@ from werkzeug.utils import secure_filename
 from zipfile import ZipFile
 from cryptography.fernet import Fernet
 import json
+from helper import ALLOWED_EXTENSIONS, listAll, listName, allowed_file
 
-ALLOWED_EXTENSIONS = set(['png', 'jpg', 'jpeg', 'gif'])
 UPLOAD_FOLDER = 'static/uploads'
 
 app = Flask(__name__)
@@ -26,6 +26,8 @@ mongo = PyMongo(app)
 
 # Key for pictures encryption. Only make a new file if a file doesn't exist yet
 # so encryption is persistent
+# Storing this here only demonstrating how to do encryption and decryption. In
+# production, will be storing key as a env variable
 def write_key():
     if os.path.exists('key.key') == False:
         key = Fernet.generate_key()
@@ -128,30 +130,6 @@ def register():
     return render_template('register.html')
 
 
-# Function to list all of the files under a specific user in Mongo
-# Returns a list of all files (including image and image name)
-# Used when user attemps to download files
-def listAll():
-    if 'username' in session:
-        client = MongoClient(MONGO_URI)
-        documents = \
-            list(client.ImagesAll.images.find({'username': session['username'
-                 ]}))
-        return documents
-
-
-# Function to list all of the filers under a specific user in Mongo
-# Returns ONLY filenames
-# Used when loading files to dashboard and deleting files
-def listName():
-    if 'username' in session:
-        client = MongoClient(MONGO_URI)
-        documents = \
-            list(client.ImagesAll.images.find({'username': session['username'
-                 ]}, {'filename': 1}))
-        return documents
-
-
 # User uploads images
 # Returns the dashboard with the newly uploaded images
 @app.route('/upload', methods=['POST'])
@@ -209,12 +187,6 @@ def upload():
 def display_image(filename):
     return redirect(url_for('static', filename='uploads/' + filename),
                     code=301)
-
-
-# Allowable file extensions
-def allowed_file(filename):
-    return '.' in filename and filename.rsplit('.', 1)[1].lower() \
-        in ALLOWED_EXTENSIONS
 
 
 # User log out. Clear session username
@@ -309,4 +281,4 @@ def deletePictures():
 
 if __name__ == '__main__':
     write_key()
-    app.run(debug=True, threaded=True, port=5000)
+    app.run(threaded=True, port=5000)
