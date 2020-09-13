@@ -25,13 +25,13 @@ User can log out, and upon logging back in, user can still see the images previo
 ### User Screenshots
 
 ###### User Registration
-![Register](https://github.com/AndyJiang99/Shopify-Winter-2021-Image-Repo/blob/master/Images/register.png)
+![Register](https://github.com/AndyJiang99/Shopify-Winter-2021-Image-Repo/blob/master/Images/Register.png)
 
 ###### User Dashboard
 ![Dashboard](https://github.com/AndyJiang99/Shopify-Winter-2021-Image-Repo/blob/master/Images/Dashboard.png)
 
 ###### Successful Upload
-![Uploaded](https://github.com/AndyJiang99/Shopify-Winter-2021-Image-Repo/blob/master/Images/uploaded.png)
+![Uploaded](https://github.com/AndyJiang99/Shopify-Winter-2021-Image-Repo/blob/master/Images/Uploaded.png)
 
 ### Current Features
 
