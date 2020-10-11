@@ -53,9 +53,10 @@
             {% if filenames %}
             <h2>Just uploaded the following images!</h2>
             {% endif %}
-		</div>
+        </div>
+        {% block uploadedimages %}{% endblock %}
+    {% endblock %}
 	</div>
 	
 </div>
-{% block uploadedimages %}{% endblock %}
-{% endblock %}
+
