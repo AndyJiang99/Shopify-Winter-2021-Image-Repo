@@ -6,6 +6,8 @@
             {% for filename in filenames %}
                 <div class="col-sm-4">
                     <img src="{{ url_for('display_image', filename=filename) }}" style="max-width: 100%; max-height: auto;">
+                    <h4>{{filename}}</h4>
+                    <br>
                 </div>
             {% endfor %}
 		{% endif %}
