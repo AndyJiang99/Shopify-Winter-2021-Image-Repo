@@ -1,17 +1,17 @@
 {% extends "dashboard.html" %}
 {% block uploadedimages %} 
-<div class="container" style="display:block; padding-top:10%; padding-bottom:10%">
+<!-- <div class="container" style="display:block; padding-top:10%; padding-bottom:10%"> -->
 	<div class="row" style='text-align: center;'>
 		{% if filenames %}
             {% for filename in filenames %}
-                <div class="col-sm-4">
+                <div class="col-sm-4" style="overflow-wrap: break-word; word-wrap: break-word; hyphens: auto;">
                     <img src="{{ url_for('display_image', filename=filename) }}" style="max-width: 100%; max-height: auto;">
-                    <h4>{{filename}}</h4>
+                    {{filename}}
                     <br>
                 </div>
             {% endfor %}
 		{% endif %}
 		</div>
     </div>
-</div>
+<!-- </div> -->
 {% endblock %}
