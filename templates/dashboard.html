@@ -1,8 +1,11 @@
 {% extends "layout.html" %}
 {% block body %} 
-<div class="container" style="display:block; margin-top:10%">
+<div class="container" style="height:100vh; display:block; margin-top:0; padding-top: 10%">
     <div class="row h-100" style='text-align: center; display:block;'>
         <div class="col-sm-6 col-md-offset-6 mx-auto my-auto">
+            <!-- <div class="container" style="display:block; margin-top:10%">
+                <div class="row h-100" style='text-align: center; display:block;'>
+                    <div class="col-sm-6 col-md-offset-6 mx-auto my-auto"> -->
             <h1> Welcome to your image repository! </h1>
             <p> You are currently logged in as {{ name }}
             <form>
@@ -52,7 +55,7 @@
             {% endif %}
 		</div>
 	</div>
-	{% block uploadedimages %}{% endblock %}
+	
 </div>
-
+{% block uploadedimages %}{% endblock %}
 {% endblock %}
