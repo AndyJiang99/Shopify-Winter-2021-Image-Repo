@@ -8,8 +8,8 @@ This application allows the numerous features for users to use this application 
 
 ### Usage
 
-The application is deployed at: https://shopify-winter-2021-image-repo.herokuapp.com/
-Staging application with new features (if any) is deployed at: https://shopify-winter2021-staging.herokuapp.com/
+The application is deployed at: https://shopify-winter-2021-image-repo.herokuapp.com/ \
+Staging application with new features (if any) is deployed at: https://shopify-winter2021-staging.herokuapp.com/ \
 To run this project locally, follow these steps
 1. `git clone` the project
 2. Open terminal or command line and run `pip3 install -r requirements.txt`
