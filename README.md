@@ -24,14 +24,17 @@ User can log out, and upon logging back in, user can still see the images previo
 
 ### User Screenshots
 
-###### User Registration
+#### User Registration
 ![Register](https://github.com/AndyJiang99/Shopify-Winter-2021-Image-Repo/blob/master/Images/Register.png)
 
-###### User Dashboard
+#### User Dashboard
 ![Dashboard](https://github.com/AndyJiang99/Shopify-Winter-2021-Image-Repo/blob/master/Images/Dashboard.png)
 
-###### Successful Upload
+##### Successful Upload
 ![Uploaded](https://github.com/AndyJiang99/Shopify-Winter-2021-Image-Repo/blob/master/Images/Uploaded.png)
+
+#### Logout
+![Logout](https://github.com/AndyJiang99/Shopify-Winter-2021-Image-Repo/blob/master/Images/Logout.png)
 
 ### Current Features
 
@@ -53,6 +56,8 @@ Current features/abilities implemented:
  - Hover to get a preview of the image
 
 ### Flowchart of data flow
+
+![FlowDiagram](https://github.com/AndyJiang99/Shopify-Winter-2021-Image-Repo/blob/master/Images/FlowDiagram.png)
 
 ```
 User/Client ->> Flask Server: User registers.
