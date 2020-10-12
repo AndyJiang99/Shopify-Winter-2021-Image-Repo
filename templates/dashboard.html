@@ -9,6 +9,13 @@
                 <button type="input" formmethod="post" formaction="/logout" value="Logout" class="btn btn-outline-primary">Logout</button>
             </form>
             </p>
+
+            <form>
+                <p>
+                    <button type="input" formmethod="post" formaction="/viewPublic" enctype="multipart/form-data" value="viewPublic" class="btn btn-outline-success btn-block">View All Public Images</button>
+                </p>
+            </form>
+
             <h2>Here are all of your uploaded images!</h2>
             <form>
                 <ul style="list-style-type:none; display:inline-block; text-align: left;">
@@ -43,6 +50,7 @@
                         <input type="file" name="files[]" multiple="true" autocomplete="off" required accept=".jpg, .png" >
                     </p>
                 </dl>
+                <input type="checkbox" id=public name= "public" value=public>&nbsp Upload as public
                 <p>
                     <button type="input" value="Upload" class="btn btn-outline-info btn-block">Upload</button>
                 </p>
