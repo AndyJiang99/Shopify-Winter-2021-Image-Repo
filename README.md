@@ -110,7 +110,7 @@ images{
 
 ### Flowchart of data flow
 
-![FlowDiagram](https://github.com/AndyJiang99/Shopify-Winter-2021-Image-Repo/blob/master/Images/FlowChart.png)
+![Flowchart](https://github.com/AndyJiang99/Shopify-Winter-2021-Image-Repo/blob/master/Images/Flowchart.png)
 
 ```
 User/Client ->> Flask Server: User registers.
