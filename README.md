@@ -4,7 +4,8 @@ Shopify Winter 2021 Backend Developer Intern application project
 Made by Andy Jiang, with a lot of ☕️☕️☕️
 
 This is my project for the Shopify Winter 2021 Backend Developer Internship application!
-This application allows the numerous features for users to use this application as an image repository to persistently store delete their images, allowing for authentication, encrypted uploads, downloads, and deletion.
+This application allows the numerous features for users to use this application as a persistent image repository.
+It allows for login, authentication, and registrations of new users. Users can encrypted upload and store their images. Users can also download and delete the images they have uploaded. Users also have the option to show their images as public or not, allowing all other users of the service to view their publicly uploaded images.
 
 ### Usage
 
@@ -14,7 +15,9 @@ To run this project locally, follow these steps
 1. `git clone` the project
 2. Open terminal or command line and run `pip3 install -r requirements.txt`
 3. Modify the `MONGO_URI` in `app.py` to your own MongoDB Database
-4. Run `python3 app.py`
+4. Create MongoDB Database with the same schema
+5. Run `python3 app.py`
+6. Flask server at `https://localhost:5000`
 
 ### To use
 
@@ -29,10 +32,13 @@ User can log out, and upon logging back in, user can still see the images previo
 ![Register](https://github.com/AndyJiang99/Shopify-Winter-2021-Image-Repo/blob/master/Images/Register.png)
 
 #### User Dashboard
-![Dashboard](https://github.com/AndyJiang99/Shopify-Winter-2021-Image-Repo/blob/master/Images/Dashboard.png)
+![Dashboard](https://github.com/AndyJiang99/Shopify-Winter-2021-Image-Repo/blob/master/Images/DashboardView.png)
 
 ##### Successful Upload
 ![Uploaded](https://github.com/AndyJiang99/Shopify-Winter-2021-Image-Repo/blob/master/Images/Uploaded.png)
+
+#### View Public Images
+![Public](https://github.com/AndyJiang99/Shopify-Winter-2021-Image-Repo/blob/master/Images/Public.png)
 
 #### Logout
 ![Logout](https://github.com/AndyJiang99/Shopify-Winter-2021-Image-Repo/blob/master/Images/Logout.png)
@@ -48,17 +54,63 @@ Current features/abilities implemented:
  - **Deleting one/bulk/all** image/s from the repository
  - **Download one/bulk/all** image/s from the repository
  - **Encrypting** the image that is stored in the database
+ - Allowing for **public uploading and viewing** of images if desired
 
 ### Planned Future Features
 
  - Confirmation screen if the user actually wants to delete the selected image/s
  - Use AI to get characteristics of the image
- - Allowing for public access of the images if desired
  - Hover to get a preview of the image
+
+### Database Schema
+```
+users{
+    username,
+    password,
+    name
+}
+
+images{
+    username,
+    image (in binary),
+    filename,
+    public
+}
+```
+
+### Routes
+```
+/
+    Welcome page for users. If authenticated, returns their dashboard, if not, returns the login page
+
+/register
+    New user registrations
+
+/login
+    Users can log in
+
+/logout
+    Users can log out
+
+/upload
+    Users can upload images
+
+/display/<filename>
+    Users can see the images they have just uploaded
+
+/viewPictures
+    Users can download images they have uploaded
+
+/deletePictures
+    Users can delete images they have uploaded
+
+/viewPublic
+    Users can see other pictures users uploaded and marked as public
+```
 
 ### Flowchart of data flow
 
-![FlowDiagram](https://github.com/AndyJiang99/Shopify-Winter-2021-Image-Repo/blob/master/Images/FlowDiagram.png)
+![FlowDiagram](https://github.com/AndyJiang99/Shopify-Winter-2021-Image-Repo/blob/master/Images/FlowChart.png)
 
 ```
 User/Client ->> Flask Server: User registers.
@@ -71,10 +123,15 @@ Flask Server -->> MongoDB: Queries username.
 MongoDB -->> Flask Server: If username exists, queries the password in salted hash. Else, empty.
 Flask Server ->> User/Client: Success, authentication incorrect, or user doesn't exist.
 
-User/Client ->> Flask Server: Uploads picture/s.
+User/Client ->> Flask Server: Uploads picture/s. User chooses whether public or not.
 Flask Server -->> MongoDB: Encrypts the picture then upload to Mongo under username.
 MongoDB -->> Flask Server: List of all the image filenames under user account.
 Flask Server ->> User/Client: Displays all image filenames user has.
+
+User/Client ->> Flask Server: View public images.
+Flask Server -->> MongoDB: Queries for all images that have public field set as true.
+MongoDB -->> Flask Server: Downloads all public images with data.
+Flask Server ->> User/Client: Displays all public images.
 
 User/Client ->> Flask Server: Delete checked pictures.
 Flask Server -->> MongoDB: Creates a delete request for each checked picture 
