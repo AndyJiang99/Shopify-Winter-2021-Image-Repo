@@ -9,6 +9,13 @@
                 <button type="input" formmethod="post" formaction="/logout" value="Logout" class="btn btn-outline-primary">Logout</button>
             </form>
             </p>
+
+            <form>
+                <p>
+                    <button type="input" formmethod="post" formaction="/viewPublic" enctype="multipart/form-data" value="viewPublic" class="btn btn-outline-success btn-block">View All Public Images</button>
+                </p>
+            </form>
+
             <h2>Here are all of your uploaded images!</h2>
             <form>
                 <ul style="list-style-type:none; display:inline-block; text-align: left;">
@@ -19,10 +26,10 @@
                 <p>
                     <button type="button" onClick="selectAll()" value="Select All" class="btn btn-outline-primary">Select All</button>
                     <button type="button" onClick="UnSelectAll()" value="Deselect All" class="btn btn-outline-primary">Unselect All</button>
-                    <button type="input" formmethod="post" formaction="/viewPictures" enctype="multipart/form-data" value="Download" class="btn btn-outline-info">Download</button>
                 </p>
                 <p>
-                    <button type="input" formmethod="post" formaction="/deletePictures" enctype="multipart/form-data" value="Delete" class="btn btn-outline-danger btn-block">Delete</button>
+                    <button type="input" formmethod="post" formaction="/viewPictures" enctype="multipart/form-data" value="Download" class="btn btn-outline-info">Download</button>
+                    <button type="input" formmethod="post" formaction="/deletePictures" enctype="multipart/form-data" value="Delete" class="btn btn-outline-danger">Delete</button>
                 </p>
             </form>
             <h2>Select multiple images to upload and display</h2>
@@ -41,6 +48,7 @@
                 <dl>
                     <p>
                         <input type="file" name="files[]" multiple="true" autocomplete="off" required accept=".jpg, .png" >
+                        <input type="checkbox" id=public name= "public" value=public>&nbsp Upload as public
                     </p>
                 </dl>
                 <p>

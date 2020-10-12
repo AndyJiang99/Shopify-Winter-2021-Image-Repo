@@ -144,7 +144,7 @@ def logout():
 @app.route('/upload', methods=['POST'])
 def upload():
     if 'username' in session:
-
+        publicBool = request.form.getlist('public')
         # If user hasn't uploaded any files
         if 'files[]' not in request.files:
             flash('No file part')
@@ -172,11 +172,19 @@ def upload():
                     file_data = imageFile.read()
                 encrypted_data = f.encrypt(file_data)
 
-                # Upload encrypted image to Mongo with the filename
+                # Upload encrypted image to Mongo with the filename and public or not
                 client = MongoClient(MONGO_URI)
+
+                public = "False"
+                if (publicBool != []):
+                    if (publicBool[0] == "public"):
+                        public = "True"
+
                 client.ImagesAll.images.insert_one({'username': session['username'
                         ], 'image': encrypted_data,
-                        'filename': filename})
+                        'filename': filename,
+                        'public': public})
+
             else:
                 flash('Allowed image types are -> png, jpg, jpeg, gif')
                 return redirect('dashboard.html')
@@ -201,7 +209,7 @@ def display_image(filename):
 # Allows the user to be able to download files they have uploaded
 # Returns a file to the client
 @app.route('/viewPictures', methods=['POST'])
-def viewPictures():
+def downloadPictures():
     if 'username' in session:
 
         # Gets all checked images the user wants to download on the dashboard
@@ -278,6 +286,39 @@ def deletePictures():
 
     # If not authenticated, send back to register page
     return render_template('register.html')
+
+# Allows the user to view all public images
+# Returns the layout page with all public images
+@app.route('/viewPublic', methods=['GET','POST'])
+def viewPublic():
+    for file in os.listdir('static/downloads/'):
+        os.remove('static/downloads/' + file)
+
+    client = MongoClient(MONGO_URI)
+    allImages = \
+        list(client.ImagesAll.images.find({'public': "True"}))
+    imageList = []
+    authorList = []
+
+    # Loads the encryption key
+    key = load_key()
+
+    # Goes through all the images
+    for image in allImages:
+
+        f = Fernet(key)
+
+        # Decrypt the image data using the key
+        decrypt_data = f.decrypt(image['image'])
+
+        # Write to the disk on the backend
+        with open('static/downloads/' + image['filename'], 'wb') as file:
+            file.write(decrypt_data)
+            
+        imageList.append(image['filename'])
+        authorList.append(image['username'])
+
+    return render_template('public.html', filenames=imageList, authorList=authorList)
 
 # Function to list all of the files under a specific user in Mongo
 # Returns a list of all files (including image and image name)
