@@ -43,7 +43,7 @@ def load_key():
 # Homepage. If user is authenticated already, show the dashboard with
 # pictures the user already uploaded.
 # Returns a page
-@app.route('/')
+@app.route('/', methods=['POST', 'GET'])
 def index():
     if 'username' in session:
         listFiles = []
@@ -319,6 +319,27 @@ def viewPublic():
         authorList.append(image['username'])
 
     return render_template('public.html', filenames=imageList, authorList=authorList)
+
+
+# Allows the user to delete their account
+# Returns the login page
+@app.route('/deleteAccount', methods=['GET','POST'])
+def deleteAccount():
+    if 'username' in session:
+        listFiles = []
+        allImages = listName()
+        client = MongoClient(MONGO_URI)
+        if (allImages != []):
+            # Deletes all images from account
+            client.ImagesAll.images.delete_many({'username': session['username']})
+
+        client.UserLogin.users.delete_one({'username': session['username']})
+        session.clear()
+        return render_template('index.html',
+                    message='Successfully deleted account!')
+    
+    return render_template('index.html')
+
 
 # Function to list all of the files under a specific user in Mongo
 # Returns a list of all files (including image and image name)

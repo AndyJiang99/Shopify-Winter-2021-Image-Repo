@@ -32,7 +32,7 @@ User can log out, and upon logging back in, user can still see the images previo
 ![Register](https://github.com/AndyJiang99/Shopify-Winter-2021-Image-Repo/blob/master/Images/Register.png)
 
 #### User Dashboard
-![Dashboard](https://github.com/AndyJiang99/Shopify-Winter-2021-Image-Repo/blob/master/Images/DashboardView.png)
+![Dashboard](https://github.com/AndyJiang99/Shopify-Winter-2021-Image-Repo/blob/master/Images/Dashboard.png)
 
 ##### Successful Upload
 ![Uploaded](https://github.com/AndyJiang99/Shopify-Winter-2021-Image-Repo/blob/master/Images/Uploaded.png)
@@ -55,6 +55,7 @@ Current features/abilities implemented:
  - **Download one/bulk/all** image/s from the repository
  - **Encrypting** the image that is stored in the database
  - Allowing for **public uploading and viewing** of images if desired
+ - Users can **delete their account**
 
 ### Planned Future Features
 
@@ -106,16 +107,19 @@ images{
 
 /viewPublic
     Users can see other pictures users uploaded and marked as public
+
+/deleteAccount
+    Users can delete their account and all associate pictures
 ```
 
 ### Flowchart of data flow
 
-![Flowchart](https://github.com/AndyJiang99/Shopify-Winter-2021-Image-Repo/blob/master/Images/Flowchart.png)
+![Flowchart](https://github.com/AndyJiang99/Shopify-Winter-2021-Image-Repo/blob/master/Images/Flow.png)
 
 ```
 User/Client ->> Flask Server: User registers.
-Flask Server -->> MongoDB: If username doesn't exist, saves registration info
-MongoDB -->> Flask Server: Success
+Flask Server -->> MongoDB: If username doesn't exist, saves registration info.
+MongoDB -->> Flask Server: Success.
 Flask Server ->> User/Client: Logs user into dashboard.
 
 User/Client ->> Flask Server: Authenticates.
@@ -134,13 +138,20 @@ MongoDB -->> Flask Server: Downloads all public images with data.
 Flask Server ->> User/Client: Displays all public images.
 
 User/Client ->> Flask Server: Delete checked pictures.
-Flask Server -->> MongoDB: Creates a delete request for each checked picture 
+Flask Server -->> MongoDB: Creates a delete request for each checked picture .
 MongoDB -->> Flask Server: List of all the image filenames under user account.
 Flask Server ->> User/Client: Displays all image filenames user has.
 
 User/Client ->> Flask Server: Download checked pictures.
 Flask Server -->> MongoDB: Queries all of the images the user has including the image info.
 MongoDB -->> Flask Server: Sends the image files.
-Flask Server -->> Flask Server: Finds the files the user wants and saves it into a zip
+Flask Server -->> Flask Server: Finds the files the user wants and saves it into a zip.
 Flask Server ->> User/Client: Downloads the zip to the client.
+
+User/Client ->> Flask Server: Delete Account.
+Flask Server -->> MongoDB: Queries all of the images the user has.
+MongoDB -->> Flask Server: Sends the image names in a list.
+Flask Server -->> MongoDB: Bulk deletes all the images returned previously.
+Flask Server -->> MongoDB: Deletes the user account.
+Flask Server ->> User/Client: Returns user to login screen.
 ```
