@@ -4,12 +4,17 @@
     <div class="row h-100" style='text-align: center; display:block;'>
         <div class="col-sm-6 col-md-offset-6 mx-auto my-auto">
             <h1> Welcome to your image repository! </h1>
-            <p> You are currently logged in as {{ name }}
+            <p> You are currently logged in as <b>{{ name }} </b></p>
             <form>
-                <button type="input" formmethod="post" formaction="/logout" value="Logout" class="btn btn-outline-primary">Logout</button>
+                <p>
+                    <button type="input" formmethod="post" formaction="/logout" value="Logout" class="btn btn-outline-primary">Logout</button>
+                </p>
             </form>
-            </p>
-
+            <form>
+                <p>
+                    <button type="input" formmethod="post" formaction="/deleteAccount" enctype="multipart/form-data" value="deleteAccount" class="btn btn-outline-danger btn-block">Delete Account</button>
+                </p>
+            </form>
             <form>
                 <p>
                     <button type="input" formmethod="post" formaction="/viewPublic" enctype="multipart/form-data" value="viewPublic" class="btn btn-outline-success btn-block">View All Public Images</button>
